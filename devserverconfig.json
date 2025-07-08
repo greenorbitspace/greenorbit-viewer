@@ -1,0 +1,10 @@
+{
+  "port": 3001,
+  "allowedHosts": ["localhost", "127.0.0.1"],
+  "allowProxyFor": [
+    "https://data.greenorbit.earth",
+    "https://public.opendatasoft.com",
+    "https://sedac.ciesin.columbia.edu",
+    "https://worldbank.org"
+  ]
+}
