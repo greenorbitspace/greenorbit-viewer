@@ -1,4 +1,4 @@
-name: Build and Deploy TerriaJS Viewer
+name: Deploy TerriaJS Viewer
 
 on:
   push:
@@ -11,29 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./  # root folder of your repo; adjust if needed
+        # Adjust this if your package.json is in a subfolder
+        working-directory: ./ 
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install --legacy-peer-deps
+        run: npm ci
 
-      - name: Run lint
-        run: yarn gulp lint
+      - name: Run linter
+        run: npm run lint
 
       - name: Build project
-        run: yarn gulp build
+        run: npm run build
 
       - name: Release
-        run: yarn gulp release
+        run: npm run release
 
       - name: Deploy to GitHub Pages
         if: success()
@@ -41,9 +45,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: wwwroot
-
-      # Uncomment to add Docker build and push steps later
-      # - name: Docker Build + Push
-      #   run: yarn docker-build-prod
-      #   env:
-      #     DOCKER_BUILDKIT: 1
