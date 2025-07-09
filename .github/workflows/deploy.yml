@@ -1,9 +1,17 @@
+name: Build and Deploy TerriaJS Viewer
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./  # or remove this line entirely if your repo root is the right place
+        working-directory: ./  # root folder of your repo; adjust if needed
 
     steps:
       - name: Checkout repo
@@ -26,3 +34,16 @@ jobs:
 
       - name: Release
         run: yarn gulp release
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: wwwroot
+
+      # Uncomment to add Docker build and push steps later
+      # - name: Docker Build + Push
+      #   run: yarn docker-build-prod
+      #   env:
+      #     DOCKER_BUILDKIT: 1
