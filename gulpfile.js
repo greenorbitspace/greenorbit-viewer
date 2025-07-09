@@ -193,6 +193,7 @@ gulp.task("lint", function (done) {
   runExternalModule(eslintExecutable, [
     "--max-warnings",
     "0",
+    "--fix"
     "terriajs/buildprocess/**/*.js",
     "terriajs/lib/**/*.js"
   ]);
