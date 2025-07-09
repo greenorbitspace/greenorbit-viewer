@@ -1,11 +1,52 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
-import { defineConfig } from "eslint/config";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
+export default [
+  {
+    ignores: ["node_modules/**", "build/**", "wwwroot/build/**"], // ignore folders
 
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], languageOptions: { globals: globals.browser } },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-]);
+    languageOptions: {
+      globals: {
+        // Define globals based on env: browser, node, es2021
+        window: "readonly",
+        document: "readonly",
+        console: "readonly",
+        module: "readonly",
+        require: "readonly",
+        process: "readonly",
+        __dirname: "readonly",
+        Buffer: "readonly"
+      },
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+
+    plugins: {
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin
+    },
+
+    rules: {
+      "no-unused-vars": "warn",
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    },
+
+    settings: {
+      react: {
+        version: "detect"
+      }
+    },
+
+    linterOptions: {
+      reportUnusedDisableDirectives: "error"
+    }
+  }
+];

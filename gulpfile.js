@@ -184,15 +184,26 @@ gulp.task(
   })
 );
 
+const path = require("path");
+const runExternalModule = require("terriajs/buildprocess/runExternalModule");
+
 gulp.task("lint", function (done) {
-  var runExternalModule = require("terriajs/buildprocess/runExternalModule");
   const eslintDir = path.dirname(require.resolve("eslint/package.json"));
   const eslintExecutable = path.join(eslintDir, "bin", "eslint.js");
+
+  // Define files to lint - adjust globs as needed:
+  const filesToLint = [
+    "wwwroot/**/*.{js,jsx,ts,tsx}",
+    "packages/**/*.{js,jsx,ts,tsx}",
+    "!node_modules/**"
+  ];
+
   runExternalModule(eslintExecutable, [
-    "--max-warnings",
-    "0",
-    "wwwroot/**/*.js"
+    "--max-warnings=0",
+    "--config", "./eslint.config.mjs",
+    ...filesToLint
   ]);
+
   done();
 });
 
