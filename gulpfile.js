@@ -11,6 +11,7 @@ var fs = require("fs");
 var gulp = require("gulp");
 var path = require("path");
 var PluginError = require("plugin-error");
+var glob = require("glob");
 var terriajsServerGulpTask = require("terriajs/buildprocess/terriajsServerGulpTask");
 
 var watchOptions = {
@@ -27,22 +28,16 @@ gulp.task("check-terriajs-dependencies", function (done) {
 });
 
 gulp.task("write-version", function (done) {
-  var fs = require("fs");
   var spawnSync = require("child_process").spawnSync;
 
   const nowDate = new Date();
-  const dateString = `${nowDate.getFullYear()}-${
-    nowDate.getMonth() + 1
-  }-${nowDate.getDate()}`;
+  const dateString = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`;
   const packageJson = require("./package.json");
   const terriajsPackageJson = require("./node_modules/terriajs/package.json");
 
-  const isClean =
-    spawnSync("git", ["status", "--porcelain"]).stdout.toString().length === 0;
+  const isClean = spawnSync("git", ["status", "--porcelain"]).stdout.toString().length === 0;
 
-  const gitHash = spawnSync("git", ["rev-parse", "--short", "HEAD"])
-    .stdout.toString()
-    .replace("\n", "");
+  const gitHash = spawnSync("git", ["rev-parse", "--short", "HEAD"]).stdout.toString().trim();
 
   let version = `${dateString}-${packageJson.version}-${terriajsPackageJson.version}-${gitHash}`;
 
@@ -71,6 +66,7 @@ gulp.task("write-version", function (done) {
 gulp.task("render-index", function renderIndex(done) {
   var ejs = require("ejs");
   var minimist = require("minimist");
+
   // Arguments written in skewer-case can cause problems (unsure why), so stick to camelCase
   var options = minimist(process.argv.slice(2), {
     string: ["baseHref"],
@@ -145,10 +141,7 @@ gulp.task(
       var fs = require("fs");
       var watchWebpack = require("terriajs/buildprocess/watchWebpack");
       var webpack = require("webpack");
-      var webpackConfig = require("./buildprocess/webpack.config.js")(
-        true,
-        false
-      );
+      var webpackConfig = require("./buildprocess/webpack.config.js")(true, false);
 
       checkForDuplicateCesium();
 
@@ -186,17 +179,28 @@ gulp.task(
 
 gulp.task("lint", function (done) {
   var runExternalModule = require("terriajs/buildprocess/runExternalModule");
-  const path = require("path");
-  const eslintDir = path.dirname(require.resolve("eslint/package.json"));
-  const eslintExecutable = path.join(eslintDir, "bin", "eslint.js");
+  var eslintDir = path.dirname(require.resolve("eslint/package.json"));
+  var eslintExecutable = path.join(eslintDir, "bin", "eslint.js");
+
+  // Expand globs to file paths explicitly before passing to ESLint
+  var filesToLint = [
+    ...glob.sync("terriajs/buildprocess/**/*.js"),
+    ...glob.sync("terriajs/lib/**/*.js")
+  ];
+
+  if (filesToLint.length === 0) {
+    console.warn("Warning: No JS files found to lint.");
+    done();
+    return;
+  }
 
   runExternalModule(eslintExecutable, [
     "--max-warnings",
     "0",
     "--fix",
-    "terriajs/buildprocess/**/*.js",
-    "terriajs/lib/**/*.js"
+    ...filesToLint
   ]);
+
   done();
 });
 
@@ -205,10 +209,10 @@ function getPackageRoot(packageName) {
 }
 
 gulp.task("clean", function (done) {
-  var fs = require("fs-extra");
+  var fsExtra = require("fs-extra");
 
-  // // Remove build products
-  fs.removeSync(path.join("wwwroot", "build"));
+  // Remove build products
+  fsExtra.removeSync(path.join("wwwroot", "build"));
 
   done();
 });
@@ -261,11 +265,11 @@ function syncDependencies(dependencies, targetJson, justWarn) {
 }
 
 function checkForDuplicateCesium() {
-  var fse = require("fs-extra");
+  var fsExtra = require("fs-extra");
 
   if (
-    fse.existsSync("node_modules/terriajs-cesium") &&
-    fse.existsSync("node_modules/terriajs/node_modules/terriajs-cesium")
+    fsExtra.existsSync("node_modules/terriajs-cesium") &&
+    fsExtra.existsSync("node_modules/terriajs/node_modules/terriajs-cesium")
   ) {
     console.log(
       "You have two copies of terriajs-cesium, one in this application's node_modules\n" +
