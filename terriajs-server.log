@@ -1,0 +1,10 @@
+Using config file "/Volumes/DevProjects/greenorbitspace/greenorbit-viewer/serverconfig.json".
+Serving directory "/Volumes/DevProjects/greenorbitspace/greenorbit-viewer/wwwroot" on port 3001 to the world.
+Error: connect ETIMEDOUT 134.178.63.233:80
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1636:16) {
+  errno: -60,
+  code: 'ETIMEDOUT',
+  syscall: 'connect',
+  address: '134.178.63.233',
+  port: 80
+}

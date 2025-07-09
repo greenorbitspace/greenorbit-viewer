@@ -1,0 +1,1 @@
+{"version":3,"file":"SearchModelFactory.js","sourceRoot":"","sources":["../../../lib/Models/SearchProviders/SearchModelFactory.ts"],"names":[],"mappings":"AAEA,OAAO,YAAY,MAAM,4BAA4B,CAAC;AAEtD,MAAM,OAAO,kBAAmB,SAAQ,YAAY;IAClD,QAAQ,CACN,IAAY,EACZ,WAAmE;QAEnE,KAAK,CAAC,QAAQ,CAAC,IAAI,EAAE,WAAW,CAAC,CAAC;IACpC,CAAC;CACF"}

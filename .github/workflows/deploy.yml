@@ -1,0 +1,28 @@
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./  # or remove this line entirely if your repo root is the right place
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --legacy-peer-deps
+
+      - name: Run lint
+        run: yarn gulp lint
+
+      - name: Build project
+        run: yarn gulp build
+
+      - name: Release
+        run: yarn gulp release
