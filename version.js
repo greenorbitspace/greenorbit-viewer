@@ -1,1 +1,1 @@
-module.exports = 'Development Build';
+module.exports = '2025-7-9-0.4.2-8.10.0-0a893e562 (plus local modifications)';
