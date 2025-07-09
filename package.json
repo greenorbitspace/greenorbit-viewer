@@ -87,6 +87,7 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "start": "terriajs-server --config-file devserverconfig.json",
+    "lint": "gulp lint",
     "build": "gulp build",
     "release": "gulp release",
     "dev": "gulp dev",
