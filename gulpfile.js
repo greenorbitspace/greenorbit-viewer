@@ -184,7 +184,6 @@ gulp.task(
   })
 );
 
-const path = require("path");
 const runExternalModule = require("terriajs/buildprocess/runExternalModule");
 
 gulp.task("lint", function (done) {
