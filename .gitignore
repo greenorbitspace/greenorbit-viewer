@@ -1,0 +1,42 @@
+# Node dependencies
+/node_modules/
+
+# Yarn cache (if using yarn)
+/.yarn/
+/.yarnrc.yml
+
+# Build outputs
+/wwwroot/build/
+/dist/
+/build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Cache folders
+.cache/
+node_modules/.cache/
+
+# Lock files (if you want to force npm/yarn to regenerate)
+/package-lock.json
+/yarn.lock
+
+# Git submodules or embedded repos cache (specific to your case)
+node_modules/.cache/gh-pages/
+
+# Coverage reports
+coverage/
