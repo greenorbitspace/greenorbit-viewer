@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "engines": {
     "node": "20.19.3",
-    "npm": "10.8.2"
+    "npm": ">=10.8.2 <12.0.0"
   },
   "repository": {
     "type": "git",
@@ -25,66 +25,37 @@
   },
   "dependencies": {
     "ajv": "6.12.6",
+    "ajv-formats": "^0.1.0",
     "ajv-keywords": "3.5.2",
+    "ejs": "^3.1.10",
+    "terriajs": "^8.10.0",
     "terriajs-server": "^4.0.2"
   },
-  "config": {
-    "docker": {
-      "name": "terriamap",
-      "include": "wwwroot node_modules serverconfig.json index.js package.json version.js",
-      "dockerfile": "deploy/docker/Dockerfile"
-    }
-  },
   "devDependencies": {
-    "@babel/core": "^7.23.5",
-    "@babel/preset-env": "^7.23.5",
-    "@babel/preset-react": "^7.23.3",
-    "@typescript-eslint/eslint-plugin": "^8.24.0",
-    "@typescript-eslint/parser": "^8.24.0",
-    "babel-loader": "^9.2.1",
+    "@types/fetch-mock": "^7.3.8",
+    "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
-    "del": "^8.0.0",
-    "ejs": "^3.1.10",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "fetch-mock": "^11.1.5",
+    "fetch-mock": "^12.5.3",
+    "fetch-mock-jest": "^1.5.1",
     "fork-ts-checker-notifier-webpack-plugin": "^9.0.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "fs-extra": "^7.0.1",
     "gh-pages": "^6.3.0",
-    "globals": "^16.3.0",
-    "gulp": "^5.0.0",
-    "gulp-eslint": "^6.0.0",
+    "gulp": "^4.0.2",
     "husky": "^8.0.3",
-    "is-subdir": "^1.2.0",
-    "json5": "^2.1.0",
-    "lodash": "^4.17.21",
-    "minimist": "^1.2.8",
+    "mini-css-extract-plugin": "^2.9.2",
     "node-notifier": "^10.0.1",
     "plugin-error": "^2.0.1",
-    "prettier": "2.7.1",
+    "prettier": "^3.6.2",
     "pretty-quick": "^4.0.0",
-    "prop-types": "^15.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.81.0",
-    "sass-loader": "^16.0.3",
-    "style-loader": "^4.0.0",
-    "svg-sprite-loader": "^6.0.11",
-    "terriajs": "8.10.0",
-    "terriajs-cesium": "8.0.2",
-    "terriajs-plugin-api": "0.0.1-alpha.17",
-    "terriajs-plugin-sample": "0.0.1-alpha.7",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.36.0",
-    "urijs": "^1.18.12",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0",
-    "yargs": "^17.7.2"
+    "sass": "^1.62.1",
+    "sass-loader": "^12.6.0",
+    "typescript": "5.4.5",
+    "webpack": "5.100.0",
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
@@ -104,12 +75,8 @@
     "prettier-check": "prettier --check ."
   },
   "overrides": {
-    "ajv": "6.12.6",
-    "ajv-keywords": "3.5.2",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
-    "@types/css-font-loading-module": "0.0.7",
-    "@types/lodash": "4.14.182",
-    "@types/node": "22.13.1"
+    "@types/css-font-loading-module": "0.0.7"
   }
 }
